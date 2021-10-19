@@ -13,6 +13,7 @@ server:
           password: _PASSWORD_
           maxConns: 20
           maxConnLifetime: "1h"
+          existingSecret: "temporal-db"
 
       visibility:
         driver: "sql"
@@ -26,6 +27,7 @@ server:
           password: _PASSWORD_
           maxConns: 20
           maxConnLifetime: "1h"
+          existingSecret: "temporal-db"
 
 cassandra:
   enabled: false

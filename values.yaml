@@ -21,7 +21,7 @@ server:
   sidecarContainers:
   image:
     repository: temporalio/server
-    tag: 1.18.1
+    tag: 1.12.2
     pullPolicy: IfNotPresent
 
   # Global default settings (can be overridden per service)
@@ -238,7 +238,7 @@ admintools:
   enabled: true
   image:
     repository: temporalio/admin-tools
-    tag: 1.18.1
+    tag: 1.12.3
     pullPolicy: IfNotPresent
 
   service:
@@ -265,15 +265,18 @@ web:
   replicaCount: 1
 
   image:
-    repository: temporalio/ui
-    tag: latest
+    # repository: temporalio/ui
+    # tag: latest
+    repository: temporalio/web
+    tag: 1.12.0
     pullPolicy: IfNotPresent
 
   service:
     # set type to NodePort if access to web needs access from outside the cluster
     # for more info see https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
     type: ClusterIP
-    port: 8080
+    port: 8088
+    # port: 8080
     annotations: {}
     # loadBalancerIP:
 
@@ -316,14 +319,14 @@ web:
 
 schema:
   setup:
-    enabled: true
+    enabled: false
     backoffLimit: 100
   update:
-    enabled: true
+    enabled: false
     backoffLimit: 100
 
 elasticsearch:
-  enabled: true
+  enabled: false
   replicas: 3
   persistence:
     enabled: false
@@ -336,14 +339,16 @@ elasticsearch:
   username: ""
   password: ""
   visibilityIndex: "temporal_visibility_v1_dev"
+  sysctlInitContainer:
+    enabled: false
 
 prometheus:
-  enabled: true
+  enabled: false
   nodeExporter:
     enabled: false
 
 grafana:
-  enabled: true
+  enabled: false
   replicas: 1
   testFramework:
     enabled: false
@@ -400,7 +405,7 @@ grafana:
          datasource: TemporalMetrics
 
 cassandra:
-  enabled: true
+  enabled: false
   persistence:
     enabled: false
   image:
@@ -420,3 +425,6 @@ cassandra:
 
 mysql:
   enabled: false
+
+postgresql:
+  enabled: true

@@ -238,7 +238,7 @@ admintools:
   enabled: true
   image:
     repository: temporalio/admin-tools
-    tag: 1.12.3
+    tag: 1.18.2
     pullPolicy: IfNotPresent
 
   service:

@@ -46,11 +46,18 @@ spec:
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
           imagePullPolicy: {{ .Values.web.image.pullPolicy }}
           env:
+            - name: TEMPORAL_GRPC_ENDPOINT # legacy
+              value: "{{ include "temporal.fullname" . }}-frontend.{{ .Release.Namespace }}.svc:{{ .Values.server.frontend.service.port }}"
             - name: TEMPORAL_ADDRESS
               value: "{{ include "temporal.fullname" . }}-frontend.{{ .Release.Namespace }}.svc:{{ .Values.server.frontend.service.port }}"
+          volumeMounts: # legacy
+            - name: temporal-web-config
+              mountPath: /usr/app/server/config.yml
+              subPath: config.yml
           ports:
             - name: http
-              containerPort: 8080
+              # containerPort: 8080
+              containerPort: 8088
               protocol: TCP
           resources:
             {{- toYaml .Values.web.resources | nindent 12 }}
